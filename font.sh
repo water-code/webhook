@@ -2,10 +2,10 @@
 WORK_PATH='/usr/projects/xiangchengliangbanji/xiangchengfront'
 cd $WORK_PATH
 echo "先清除老代码"
-git reset --hard origin/master
+git reset --hard origin/main
 git clean -f
 echo "拉取新代码"
-git pull origin master
+git pull origin main
 echo "编译build"
 npm run build
 echo "开始执行构建后端项目:back为docker镜像名称 1.0为版本号"
