@@ -33,4 +33,31 @@ handler.on("push", function (event) {
         }
     );
 
+    // 创建docker镜像 并将这个镜像标记为最新版本
+    execSync(
+        `docker build . -t ${event.payload.repository.name}-image:latest `,
+        {
+            stdio: "inherit",
+            cwd: projectDirFront,
+        }
+    );
+
+      // 销毁 docker 容器 在创建容器前先销毁上一次创建的容器
+      execSync(
+        `docker ps -a -f "name=^${event.payload.repository.name}-container" --format="{{.Names}}" | xargs -r docker stop | xargs -r docker rm`,
+        {
+            stdio: "inherit",
+        }
+    );
+    
+    // 创建docker容器 映射服务器的9527端口到 docker容器的80端口
+    execSync(
+        `docker run -d -p 9527:80 --name ${event.payload.repository.name}-container  ${event.payload.repository.name}-image:latest`,
+        {
+            stdio: "inherit",
+        }
+    );
+
+    console.log("success");
+
 })//监听github仓库的push事件
