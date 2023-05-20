@@ -6,7 +6,7 @@ RUN npm install pnpm -g
 COPY package.json pnpm-lock.yaml ./
 RUN pnpm install
 COPY . .
-RUN npm run build
+RUN vite build
 
 # production stage
 FROM nginx:stable-alpine as production-step
