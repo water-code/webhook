@@ -32,6 +32,17 @@ handler.on("push", function (event) {
             stdio: "inherit",
         }
     );
+    // 复制 Dockerfile 到项目目录
+    fs.copyFileSync(
+        path.resolve(`./Dockerfile`),
+        path.resolve(projectDirFront, "./Dockerfile")
+    );
+
+    // 复制 .dockerignore 到项目目录
+    fs.copyFileSync(
+        path.resolve(`./.dockerignore`),
+        path.resolve(projectDirFront, "./.dockerignore")
+    );
 
     // 创建docker镜像 并将这个镜像标记为最新版本
     execSync(
