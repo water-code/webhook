@@ -6,6 +6,8 @@ RUN npm install pnpm -g
 COPY package.json pnpm-lock.yaml ./
 RUN pnpm install
 COPY . .
+RUN npm install -g increase-memory-limit
+RUN increase-memory-limit
 RUN npm run build
 
 # production stage
